@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Mountain via Chippewa Trail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-dark:  #1a3a22;
+            --green-mid:   #2a5f29;
+            --green-light: #4a8c3f;
+            --green-pale:  #e8f0e9;
+            --cream:       #f4f0e8;
+            --white:       #ffffff;
+            --text-dark:   #1c2b1e;
+            --text-muted:  #6b7c6d;
+            --shadow:      0 2px 12px rgba(0,0,0,0.08);
+            --radius:      10px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--green-dark);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        #nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        #logo-icon { font-size: 26px; }
+        #logo-title {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+        #logo-tagline {
+            display: block;
+            font-size: 8px;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 3px;
+        }
+        #nav-links {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+        }
+        #nav-links a {
+            color: rgba(255,255,255,0.80);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+        #nav-links a:hover { color: var(--white); }
+
+        /* HERO */
+        #trail-hero {
+            width: 100%;
+            height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+        #trail-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.1) 100%);
+        }
+        #hero-text {
+            position: relative;
+            z-index: 1;
+            padding: 48px 56px;
+            max-width: 560px;
+        }
+        #hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            color: var(--white);
+            line-height: 1.05;
+            margin-bottom: 6px;
+        }
+        #hero-text .location {
+            font-size: 18px;
+            color: rgba(255,255,255,0.80);
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+        #hero-text .description {
+            font-size: 15px;
+            color: rgba(255,255,255,0.70);
+            font-weight: 300;
+            line-height: 1.65;
+        }
+
+        /* PAGE BODY */
+        .page-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 40px 64px;
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 36px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green-mid); }
+
+        /* SECTION TITLE */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green-dark);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #ccdacc;
+        }
+        .section-title .title-icon {
+            width: 26px;
+            height: 26px;
+            background-color: var(--green-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        /* STAT CARDS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: var(--white);
+            border: 1px solid #e0e8e0;
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        .stat-card:hover { transform: translateY(-2px); }
+        .stat-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+            width: 44px;
+            text-align: center;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+        .stat-value {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* HOURS + AMENITIES ROW */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        /* HOURS CARD */
+        .hours-card {
+            background: var(--white);
+            border: 1px solid #e0e8e0;
+            border-radius: var(--radius);
+            padding: 24px 26px;
+            box-shadow: var(--shadow);
+        }
+        .hours-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green-dark);
+            margin-bottom: 18px;
+        }
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f4f0;
+            color: var(--text-dark);
+        }
+        .hours-row:last-child { border-bottom: none; }
+        .hours-row .closed { color: #c0392b; font-weight: 700; }
+
+        /* AMENITIES */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .amenity-card {
+            background: var(--white);
+            border: 1px solid #e0e8e0;
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: var(--shadow);
+        }
+        .amenity-icon {
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+        .amenity-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .amenity-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* ADDITIONAL INFO */
+        .info-card {
+            background: var(--white);
+            border: 1px solid #e0e8e0;
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            box-shadow: var(--shadow);
+            margin-top: 16px;
+            grid-column: 1 / -1;
+        }
+        .info-card .info-icon { font-size: 26px; flex-shrink: 0; }
+        .info-card .info-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .info-card .info-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* LINKS */
+        .link-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 36px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--green-dark);
+            color: var(--white);
+            padding: 12px 28px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary:hover { background-color: var(--green-mid); }
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--green-dark);
+            padding: 12px 28px;
+            border-radius: var(--radius);
+            border: 2px solid var(--green-dark);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-outline:hover { background-color: var(--green-dark); color: var(--white); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .bottom-grid { grid-template-columns: 1fr; }
+            .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+            #hero-text h1 { font-size: 40px; }
+        }
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            nav { padding: 0 20px; }
+            #nav-links { gap: 16px; }
+            #hero-text { padding: 32px 24px; }
+            .page-wrap { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" id="nav-logo">
+            <span id="logo-icon">&#9968;</span>
+            <div>
+                <span id="logo-title">LAZY HIKER HUB</span>
+                <span id="logo-tagline">EXPLORE. HIKE. CONNECT.</span>
+            </div>
+        </a>
+        <ul id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#trails">Trails</a></li>
+            <li><a href="index.html#hikes-by-miles">Filter</a></li>
+            <li><a href="hiking_guide.html">Guide</a></li>
+            <li><a href="index.html#login-section">Account</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header id="trail-hero">
+        <div id="hero-text">
+            <h1>Black Mountain</h1>
+            <p class="location">Bention, New Hampshire, 03785</p>
+            <p class="description">A challenging hike with rewarding views from the summit. Steep climbs and rugged terrain make this a favorite for experienced hikers.</p>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="page-wrap">
+        <a href="index.html" class="back-link">&#8592; Back to Home</a>
+
+        <!-- TRAIL INFORMATION HEADER -->
+        <div class="section-title">
+            <div class="title-icon">&#9432;</div>
+            Trail Information
+        </div>
+
+        <!-- TOP STATS GRID -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">&#128205;</div>
+                <div>
+                    <div class="stat-label">Distance</div>
+                    <div class="stat-value">3.4 Miles</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">&#9968;</div>
+                <div>
+                    <div class="stat-label">Elevation Gain</div>
+                    <div class="stat-value">1,587 ft</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">&#128200;</div>
+                <div>
+                    <div class="stat-label">Difficulty</div>
+                    <div class="stat-value">Hard</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🅿️</div>
+                <div>
+                    <div class="stat-label">Parking</div>
+                    <div class="stat-value">Available and Free</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">&#9650;</div>
+                <div>
+                    <div class="stat-label">Steepness</div>
+                    <div class="stat-value">Very Steep</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">&#9201;</div>
+                <div>
+                    <div class="stat-label">Time</div>
+                    <div class="stat-value">2-3 hours</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOURS + AMENITIES -->
+        <div class="bottom-grid">
+
+            <!-- HOURS -->
+            <div class="hours-card">
+                <h3><span>&#9201;</span> Hours</h3>
+                <div class="hours-row">
+                    <span>Monday</span>
+                    <span>9:00 AM – 4:00 PM</span>
+                </div>
+                <div class="hours-row">
+                    <span>Tuesday – Friday</span>
+                    <span>8:00 AM – 4:00 PM</span>
+                </div>
+                <div class="hours-row">
+                    <span>Saturday – Sunday</span>
+                    <span class="closed">CLOSED</span>
+                </div>
+            </div>
+
+            <!-- AMENITIES -->
+            <div>
+                <div class="amenities-grid">
+                    <div class="amenity-card">
+                        <div class="amenity-icon">🚻</div>
+                        <div>
+                            <div class="amenity-label">Restrooms</div>
+                            <div class="amenity-value">None</div>
+                        </div>
+                    </div>
+                    <div class="amenity-card">
+                        <div class="amenity-icon">💧</div>
+                        <div>
+                            <div class="amenity-label">Public Water Fountains</div>
+                            <div class="amenity-value">None</div>
+                        </div>
+                    </div>
+                    <div class="amenity-card">
+                        <div class="amenity-icon">💲</div>
+                        <div>
+                            <div class="amenity-label">Entrance Fee</div>
+                            <div class="amenity-value">None</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADDITIONAL INFO -->
+                <div class="info-card">
+                    <div class="info-icon">&#9888;️</div>
+                    <div>
+                        <div class="info-label">Additional Information</div>
+                        <div class="info-value">Poor Cell Coverage and Few Parking Options</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LINK BUTTONS -->
+        <div class="link-row">
+            <a href="https://www.blackmt.com" class="btn-primary" target="_blank">&#127758; Black Mountain Website</a>
+            <a href="index.html" class="btn-outline">&#8592; Back to Home</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
